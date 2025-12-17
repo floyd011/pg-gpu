@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mypg16-rocky9
+    container_name: test1
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=gis_db
+      - PGDATA=/var/lib/pgsql/16/data
+    volumes:
+      - ./pgdata:/var/lib/pgsql/16/data
+      - ./osmdata:/opt/osmdata
+      - .:/app
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U osmuser"]
+      interval: 2s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    image: backend-osm
+    container_name: backend-osm
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
