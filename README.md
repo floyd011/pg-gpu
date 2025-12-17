@@ -1,5 +1,6 @@
 Docker setup koji kombinuje *PostgreSQL + PostGIS + PG-Strom + pgvector + pgai*
-i pokazuje kako uvesti semantičku pretragu ,vektore i openai za LLM upite u bazu.
+i pokazuje kako uvesti semantičku pretragu ,vektore i openai za 
+<a href="https://github.com/floyd011/pgai"><strong>LLM</strong></a> upite u bazu.
 Takodje se testira GPU ubrzanje.
 
 Sve što treba je NVIDIA driveri na hostu i NVIDIA Container Toolkit (da bi container video GPU).
